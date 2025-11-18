@@ -3,6 +3,7 @@ package com.example.heo.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +27,7 @@ public class ProductController {
     // 괄호에 맞는 요청이 날아오면 아래 메서드를 실행시킨다.
     // 속성으로  value = "http://localhost:8080" 이 날아오고 목적이 GET = 조회일경우
     // * 밸류 "http://localhost:8080"는 디폴트라 생략가능
-    public String findProduct(@PathVariable("id") int id) { // PathVariable : id에 해당하는 데이터를 조회
+    public Product findProduct(@PathVariable("id") int id) { // PathVariable : id에 해당하는 데이터를 조회
         System.out.println(id); // 테스트시엔 원래 로그를 찍어보는게 맞다
 
 //        ProductService productService = new ProductService();
@@ -41,10 +42,12 @@ public class ProductController {
 
     //  상품 등록
     @RequestMapping(value = "/products", method = RequestMethod.POST) // Url과 메소드가 날라오면 아래 메소드를 호출할게
-    public void saveProduct(@RequestParam(value = "name") String productName) {
+    //public void saveProduct(@RequestParam(value = "name") String productName) {
+    public void saveProduct(@RequestBody Product product) { // 리퀘스트바디 : 프로덕트 객체의 이름에 맞게 값을 넣어줌
         // localhost:8080/products?name=_____  -> name에 들어오는 값을 String productName에 담아줌
         System.out.println("POST");
-        productService.saveProduct(productName); // Service의 saveProduct 메서드 호출
+//        productService.saveProduct(productName); // Service의 saveProduct 메서드 호출
+        productService.saveProduct(product); // 기존에 상품명을 들고 들어갔던거와 다르게 객체를 들고 감
     }
 
     // * 조회랑 등록이 같은 api 를 쓰고있지만 요청할때의 목적 (method) 로 구분됨

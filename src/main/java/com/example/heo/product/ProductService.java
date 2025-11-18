@@ -15,11 +15,11 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public String findProduct(int id) {
+    public Product findProduct(int id) {
         return productRepository.findProduct(id);
     }
 
-    public void saveProduct(String productName) {
-        productRepository.save(productName); // Repository의 save 호출
+    public void saveProduct(Product product) {
+        productRepository.save(product); // Repository의 save 호출
     }
 }
